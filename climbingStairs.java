@@ -12,7 +12,81 @@ public class climbingStairs{
         return stairs(n-1)+stairs(n-2);
     }
 }
-/*You are climbing a staircase. It takes n steps to reach the top. 
+/*
+
+if no.of stairs one can step at once is more or less than 2 import java.util.*; 
+class Stairs_M2 
+{ 
+
+ static int countWaysUtil(int n, int m) 
+ { 
+  if (n <= 2) 
+   return n; 
+  int res = 0; 
+  for (int i = 1; i <= m && i <= n; i++) 
+   res += countWaysUtil(n - i, m); 
+  return res; 
+ } 
+ 
+ // Returns number of ways to reach s'th stair 
+ static int countWays(int s, int m) 
+ { 
+  return countWaysUtil(s , m); 
+ } 
+ 
+  
+ public static void main(String args[]) 
+ { 
+  Scanner sc =new Scanner(System.in); 
+  System.out.println("enter total no.of stairs"); 
+  int s = sc.nextInt(); 
+System.out.println("enter possible stairs "); 
+int m = sc.nextInt(); 
+  System.out.println("Number of ways = " 
+      + countWays(s, m)); 
+ } 
+}
+
+
+
+import java.util.*;
+
+public class climbingStairs {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();  // Number of stairs
+        List<Integer> currentSteps = new ArrayList<>();  // List to store current step sequence
+        System.out.println("Total ways: " + stairs(n, currentSteps));
+    }
+
+    // Function to print all combinations and return the count of ways
+    public static int stairs(int n, List<Integer> currentSteps) {
+        if (n == 0) { // If we have exactly reached the top, print the current sequence
+            System.out.println(currentSteps);
+            return 1;
+        } else if (n < 0) { // If the steps exceeded, return 0
+            return 0;
+        }
+
+        // Variable to count the number of valid ways
+        int totalWays = 0;
+
+        // Take 1 step
+        currentSteps.add(1);
+        totalWays += stairs(n - 1, currentSteps);  // Recurse with one step
+        currentSteps.remove(currentSteps.size() - 1);  // Backtrack to try the next possibility
+
+        // Take 2 steps
+        currentSteps.add(2);
+        totalWays += stairs(n - 2, currentSteps);  // Recurse with two steps
+        currentSteps.remove(currentSteps.size() - 1);  // Backtrack
+
+        return totalWays;  // Return the total number of ways
+    }
+}
+
+
+You are climbing a staircase. It takes n steps to reach the top. 
 Each time you can either climb 1 or 2 steps. 
 In how many distinct ways can you climb to the top?
 

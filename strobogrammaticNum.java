@@ -1,6 +1,3 @@
-public class strobogrammaticNum {
-    
-}
 /*A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down). 
 A strobogrammatic number must consist of only the digits 0, 1, 6, 8, and 9. 
 Each of these digits either remains the same or transforms into another valid strobogrammatic digit when rotated:
@@ -59,7 +56,8 @@ The strobogrammatic numbers of length 1 are:
 NOTE: Print the results in sorted order to pass the testcases */
 import java.util.*;
 
-public class Solution{
+public class strobogrammaticNum 
+    {
     public static List<String> findStrobogrammatic(int n) {
         return generateStrobogrammatic(n, n);
     }
@@ -98,3 +96,38 @@ public class Solution{
         
     }
 }
+/*import java.util.*;
+class Solution{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        List<String> l=strobogrammatic(n);
+        Collections.sort(l);
+        System.out.println(l);
+    }
+    static char[][] digitPair={{'1','1'},{'6','9'},{'8','8'},{'9','6'}};
+    public static List<String> helper(int n,int m){
+        if(n==0){
+            return Arrays.asList("");
+        }
+        if(n==1){
+            return Arrays.asList("0","1","8");
+        }
+        List<String> list=helper(n-2,m);
+        ArrayList<String> al=new ArrayList<String>();
+        for(int i=0;i<list.size();i++){
+            String str=list.get(i);
+            if(n!=m){
+                al.add("0"+str+"0");
+            }
+            for(char[] adigitpair:digitPair){
+                al.add(adigitpair[0]+str+adigitpair[1]);
+            }
+        }
+        return al;
+    }
+    public static List<String> strobogrammatic(int n){
+        int m=n;
+        return helper(n,m);
+    } 
+}*/
