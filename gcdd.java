@@ -29,7 +29,42 @@ public class gcdd{
         (b,a%b);
     }
 }
-/*Given an integer array nums, return the greatest common divisor (GCD) of the smallest number and the largest number in the array.
+
+/*
+
+
+import java.util.*;
+public class Solution{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[]=new int[n];
+        for ( int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        int smallest=arr[0];
+        int largest=arr[0];
+        for(int i=1;i<n;i++){
+            if(arr[i]<smallest){
+                smallest=arr[i];
+            }
+            if(arr[i]>largest){
+                largest=arr[i];
+            }
+        }
+        int res=gcd(smallest,largest);
+        System.out.println(res);
+    }
+    
+    public static int gcd(int a,int b){
+        if (b==0){
+            return a;
+        }
+        return gcd(b,a%b);
+    }
+}
+    
+Given an integer array nums, return the greatest common divisor (GCD) of the smallest number and the largest number in the array.
 
 The Greatest Common Divisor (GCD) of two numbers is the largest positive integer that divides both numbers without leaving a remainder.
 

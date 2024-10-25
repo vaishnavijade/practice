@@ -41,28 +41,6 @@ public class longestCommonPrefixx{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*Given an array of strings strs, find the longest common prefix among all strings.
 
 If there is no common prefix, return an empty string "".
