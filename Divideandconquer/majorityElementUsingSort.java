@@ -52,7 +52,7 @@ class majorityElementUsingSort {
             nums[i] = scanner.nextInt();
         }
         // Create an instance of Solution and find the majority element
-        Solution solution = new Solution();
+        majorityElementUsingSort solution = new majorityElementUsingSort();
         int result = solution.majorityElement(nums);
         
         // Print the result

@@ -42,7 +42,16 @@ public class mergeSortt{
         }
         for(int i=0;i<n;i++){
             arr[low+i]=temp[i];
+
+            
         }
+        
+        
+        
+        
+        
+        // Copy sorted elements back to the original array
+    // System.arraycopy(temp, 0, arr, low, temp.length);
     } 
 }
 /*You are given an unsorted array of integers. 

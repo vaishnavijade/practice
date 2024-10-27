@@ -25,8 +25,7 @@ public class gcdd{
         if (b==0){
             return a;
         }
-        return gcdTwo
-        (b,a%b);
+        return gcdTwo(b,a%b);
     }
 }
 
