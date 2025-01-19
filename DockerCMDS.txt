@@ -1,0 +1,150 @@
+
+
+
+
+docker powershell or nayhting in administration mode
+cmds:
+
+with helloworld:
+docker --version
+docker run hello-world
+docker ps -a
+docker rm [container-id]
+docker rmi hello-world
+
+with redis:
+docker pull redis
+docker run --name my-redis -d redis
+docker ps
+docker exec -it my-redis redis-cli
+or
+winpty docker exec -it myredis redis-cli
+127.0.0.1:6379> SET name "Alice"
+OK
+127.0.0.1:6379> GET name
+"Alice"
+docker stop my-redis
+docker start my-redis
+docker stop my-redis
+docker rm my-redis
+docker rmi redis
+
+create a folder dockerPro and redis folder in it
+text doc name it Dockerfile with no extension 
+open it in notepad
+paste
+FROM redis:latest
+CMD ["redis-server"]
+save it
+
+powershell part 2 cli
+Using a Dockerfile
+
+ls
+docker build -t myredis . 
+docker images
+docker run --name newmyredis -d myredis
+docker ps
+docker stop [container id]
+docker build [container id] vaishnavijade/redis1
+docker commit [container-id] vaishnavijade/redis1
+docker login
+docker push vaishnavijade/redis1
+docker rm [container-id]
+docker rmi vaishnavijade/redis1
+docker ps -a
+docker logout
+docker pull vaishnavijade/redis1
+docker run --name myredis -d vaishnavijade/redis1
+docker exec -it myredis redis-cli
+SET name "Abcdef"
+GET name
+exit
+docker ps -a
+docker stop myredis
+docker rm [container -id]
+docker images
+docker rmi vaishnavijade/redis1
+docker logout
+
+
+
+MODIFY AND PUSH DOCKER IMAGE
+
+1. docker pull ubuntu
+2. docker run -it --name newubuntu -d ubuntu 
+3. docker ps
+4. docker exec -it 885a01bcdbe0 bash
+5. git --version
+6. apt update
+7. apt install git -y  
+8. git --version
+9. exit
+10. docker stop 885a01bcdbe0
+11. docker commit 885a01bcdbe0 vaishnavijade/newubuntu2024
+12. docker images
+13. docker login  
+14. docker push vaishnavijade/newubuntu2024
+15. docker logout 
+16. docker rm 885a01bcdbe0  
+17. docker rmi vaishnavijade/newubuntu2024
+18. docker pull vaishnavijade/newubuntu2024
+19. docker run --name newubuntu2024 -it vaishnavijade/newubuntu2024
+20. git --version
+21. exit 
+22. docker ps -a  
+23. docker stop newubuntu2024` (if applicable to stop the new container)  
+24. docker rm newubuntu2024` (if applicable to remove the new container)  
+
+
+CREATE AND PUSH DOCKER FILE IMAGE
+
+create a folder and then create 
+calculator.js
+ Dockerfile 
+FROM node: 16-alpine
+WORKDIR /app
+COPY calculator.js /app
+CMD ["node", "calculator.js"]
+
+
+// calculator.js
+
+function add(a, b) {
+    return a + b;
+}
+function subtract(a, b) {
+    return a - b;
+}
+function multiply(a, b) {
+    return a * b;
+}
+function divide(a, b) {
+    if (b === 0) {
+        return "Cannot divide by zero!";
+    }
+    return a / b;
+}
+console.log("Addition (2 + 3):", add(2, 3));
+console.log("Subtraction (5 - 2):", subtract(5, 2));
+console.log("Multiplication (4 * 3):", multiply(4, 3));
+console.log("Division (18 / 2):", divide(18, 2));
+
+
+1. docker build -t simple-calculator 
+2. docker run simple-calculator
+3. docker login
+4. docker tag simple-calculator your-dockerhub-username/simple-calculator
+5. docker push your-dockerhub-username/simple-calculator
+6. docker ps -a
+7. docker rm <container-id>
+8. docker rmi your-dockerhub-username/simple-calculator  
+9. docker pull your-dockerhub-username/simple-calculator  
+10. docker run your-dockerhub-username/simple-calculator  
+11. docker ps -a
+12. docker rm <container-id>  
+13. docker images
+14. docker rmi <image-id>
+15. docker logout
+
+
