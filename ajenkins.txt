@@ -50,3 +50,51 @@ Pipeline utility,
 Copy artifacts,
 Deploy to container.
 click on -> install without restart
+
+
+
+
+
+
+
+aws pject deployemnt
+
+cmd admin
+cd navigateto ey pair path
+ssh -i(ec2 connect)
+sudo apt update
+sudo apt-get install docker.io
+sudo apt install git 
+sudo apt install nano
+create a html file 
+<html>
+  <head>  <title>Page Title</title></head>
+  <body> <h1>Welcome to My Website</h1>  </body>
+</html>
+in gitbash open from html file
+git init
+git add README.md
+git commit "first commit"
+git branch - main
+git remote add origin https://github.com/vaishnavijade/AwsExample.git(Create a repo)
+git push-origin main
+return to cmd
+git clone url
+ls
+cd AwsExaple(filename got aboce)
+ls
+nano Dockerfile
+FROM nginx:alpine
+COPY . /usr/share/nginx/html
+ctrl o ctrl x 
+sudo docker build -t my-web-app .
+sudo docker run -d -p 80:80 my-web-app
+instance beside 
+public ipv4
+
+sudo docker ps 
+sudo docker stop <container-id>
+
+
+
+
