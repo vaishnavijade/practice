@@ -1,0 +1,52 @@
+
+pipeline {
+    agent any
+    tools {
+        maven 'MAVEN_HOME'
+    }
+    stages {
+        stage('git repo & clean') {
+            steps {
+                bat """
+                if exist SmapleMavenJavaProject (
+                    rmdir /s /q SmapleMavenJavaProject
+
+                )
+                git clone https://github.com/vaishnavijade/SmapleMavenJavaProject.git
+                """
+                bat "mvn clean -f SmapleMavenJavaProject"
+            }
+        }
+        stage('install') {
+            steps {
+                bat "mvn install -f SmapleMavenJavaProject"
+            }
+        }
+        stage('test') {
+            steps {
+                bat "mvn test -f SmapleMavenJavaProject"
+            }
+        }
+        stage('package') {
+            steps {
+                bat "mvn package -f SmapleMavenJavaProject"
+            }
+        }
+    }
+}
+
+
+paste this in tomcat users xml
+
+<role rolename="admin-gui,manager-gui ,manager-script,manager-jmx,manager-status"/>
+  <user username=“admin" password="1234"roles="manager-gui, admin-gui ,manager-script"/>
+
+
+Check in the available and install the
+plugins
+Maven integration plugin,
+Build pipeline plugin,
+Pipeline utility,
+Copy artifacts,
+Deploy to container.
+click on -> install without restart
