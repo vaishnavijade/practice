@@ -1,0 +1,351 @@
+Here’s the syntax for all the basic CRUD (Create, Read, Update, Delete) operations in MongoDB:
+
+### 1. **Create** (Insert Data)
+- **Inserting a Single Document**:
+```javascript
+db.collection.insertOne({
+    key1: value1,
+    key2: value2,
+    ...
+});
+```
+
+- **Inserting Multiple Documents**:
+```javascript
+db.collection.insertMany([
+    { key1: value1, key2: value2, ... },
+    { key1: value1, key2: value2, ... },
+    ...
+]);
+```
+
+### 2. **Read** (Query Data)
+- **Finding All Documents**:
+```javascript
+db.collection.find();
+```
+
+- **Finding Documents with a Condition**:
+```javascript
+db.collection.find({ key: value });
+```
+
+- **Find One Document**:
+```javascript
+db.collection.findOne({ key: value });
+```
+
+- **Finding Specific Fields (Projection)**:
+```javascript
+db.collection.find({ key: value }, { field1: 1, field2: 1 });
+```
+
+- **Counting Documents**:
+```javascript
+db.collection.countDocuments({ key: value });
+```
+
+- **Sorting Results**:
+```javascript
+db.collection.find().sort({ field: 1 });  // Ascending order
+db.collection.find().sort({ field: -1 }); // Descending order
+```
+
+- **Limiting Results**:
+```javascript
+db.collection.find().limit(5);  // Limits to 5 documents
+```
+
+### 3. **Update** (Modify Data)
+- **Updating a Single Document**:
+```javascript
+db.collection.updateOne(
+    { key: value },  // Filter
+    { $set: { field1: newValue1, field2: newValue2 } }  // Update
+);
+```
+
+- **Updating Multiple Documents**:
+```javascript
+db.collection.updateMany(
+    { key: value },  // Filter
+    { $set: { field1: newValue1, field2: newValue2 } }  // Update
+);
+```
+
+- **Replacing a Document**:
+```javascript
+db.collection.replaceOne(
+    { key: value },  // Filter
+    { newKey1: newValue1, newKey2: newValue2 }  // New document
+);
+```
+
+### 4. **Delete** (Remove Data)
+- **Deleting a Single Document**:
+```javascript
+db.collection.deleteOne({ key: value });
+```
+
+- **Deleting Multiple Documents**:
+```javascript
+db.collection.deleteMany({ key: value });
+```
+
+### 5. **Other Useful Operations**
+- **Upsert (Insert if Not Found, Update if Found)**:
+```javascript
+db.collection.updateOne(
+    { key: value },  // Filter
+    { $set: { field1: newValue1, field2: newValue2 } },  // Update
+    { upsert: true }  // If no document matches, a new one will be created
+);
+```
+
+- **Increment a Field**:
+```javascript
+db.collection.updateOne(
+    { key: value },  // Filter
+    { $inc: { field: 1 } }  // Increment the field by 1
+);
+```
+
+### Example Collection: Employees
+Let’s say we have a collection called `employees` with documents like:
+
+```json
+{
+  "empno": 111,
+  "name": "John Doe",
+  "age": 30,
+  "department": "HR",
+  "salary": 30000
+}
+```
+
+### Example Operations:
+
+- **Create**:
+```javascript
+db.employees.insertOne({ empno: 112, name: "Jane Smith", age: 28, department: "IT", salary: 35000 });
+```
+
+- **Read**:
+```javascript
+db.employees.find({ department: "HR" });
+```
+
+- **Update**:
+```javascript
+db.employees.updateOne({ empno: 111 }, { $set: { salary: 32000 } });
+```
+
+- **Delete**:
+```javascript
+db.employees.deleteOne({ empno: 112 });
+```
+
+With these basic commands, you can perform most CRUD operations in MongoDB!
+
+
+
+Let’s walk through each of the CRUD operations (Create, Read, Update, Delete) with examples using a sample collection of `employees`.
+
+### Example Collection: `employees`
+
+```json
+{
+  "empno": 101,
+  "name": "Alice",
+  "age": 30,
+  "department": "HR",
+  "salary": 50000
+},
+{
+  "empno": 102,
+  "name": "Bob",
+  "age": 35,
+  "department": "IT",
+  "salary": 60000
+},
+{
+  "empno": 103,
+  "name": "Charlie",
+  "age": 40,
+  "department": "Finance",
+  "salary": 70000
+}
+```
+
+### 1. **Create** (Insert Data)
+
+#### Inserting a Single Document:
+```javascript
+db.employees.insertOne({
+  empno: 104,
+  name: "David",
+  age: 28,
+  department: "Marketing",
+  salary: 55000
+});
+```
+
+- This inserts a single document with the employee information.
+
+#### Inserting Multiple Documents:
+```javascript
+db.employees.insertMany([
+  {
+    empno: 105,
+    name: "Eve",
+    age: 33,
+    department: "Sales",
+    salary: 62000
+  },
+  {
+    empno: 106,
+    name: "Frank",
+    age: 37,
+    department: "HR",
+    salary: 53000
+  }
+]);
+```
+
+- This inserts two documents at once: one for Eve and another for Frank.
+
+---
+
+### 2. **Read** (Query Data)
+
+#### Finding All Documents:
+```javascript
+db.employees.find();
+```
+- This returns all documents from the `employees` collection.
+
+#### Finding Documents with a Condition:
+```javascript
+db.employees.find({ age: { $gt: 30 } });
+```
+- This returns all employees who are older than 30.
+
+#### Finding a Single Document:
+```javascript
+db.employees.findOne({ empno: 101 });
+```
+- This returns the document for the employee with `empno: 101`.
+
+#### Finding Specific Fields (Projection):
+```javascript
+db.employees.find({ department: "HR" }, { _id: 0, name: 1, salary: 1 });
+```
+- This returns only the `name` and `salary` of employees in the "HR" department, excluding the `_id` field.
+
+---
+
+### 3. **Update** (Modify Data)
+
+#### Updating a Single Document:
+```javascript
+db.employees.updateOne(
+  { empno: 101 },
+  { $set: { salary: 55000 } }
+);
+```
+- This updates the salary of the employee with `empno: 101` to 55000.
+
+#### Updating Multiple Documents:
+```javascript
+db.employees.updateMany(
+  { department: "HR" },
+  { $set: { salary: 60000 } }
+);
+```
+- This updates the salary of all employees in the "HR" department to 60000.
+
+#### Replacing a Document:
+```javascript
+db.employees.replaceOne(
+  { empno: 104 },
+  { empno: 104, name: "David", age: 29, department: "Marketing", salary: 57000 }
+);
+```
+- This replaces the document for employee `empno: 104` with the new values.
+
+---
+
+### 4. **Delete** (Remove Data)
+
+#### Deleting a Single Document:
+```javascript
+db.employees.deleteOne({ empno: 104 });
+```
+- This deletes the document for the employee with `empno: 104`.
+
+#### Deleting Multiple Documents:
+```javascript
+db.employees.deleteMany({ department: "HR" });
+```
+- This deletes all employees who work in the "HR" department.
+
+---
+
+### Example of All CRUD Operations in Action
+
+```javascript
+// Create: Insert multiple employees
+db.employees.insertMany([
+  {
+    empno: 107,
+    name: "Grace",
+    age: 32,
+    department: "Finance",
+    salary: 75000
+  },
+  {
+    empno: 108,
+    name: "Hannah",
+    age: 29,
+    department: "IT",
+    salary: 65000
+  }
+]);
+
+// Read: Find all employees in "IT" department
+const itEmployees = db.employees.find({ department: "IT" }).toArray();
+printjson(itEmployees);
+
+// Update: Increase salary by 5000 for employees in "Finance" department
+db.employees.updateMany(
+  { department: "Finance" },
+  { $inc: { salary: 5000 } }
+);
+
+// Delete: Remove employees older than 40
+db.employees.deleteMany({ age: { $gt: 40 } });
+```
+
+### Explanation:
+
+1. **Create**: 
+   - `insertOne()` is used to add a single document to the collection.
+   - `insertMany()` is used to add multiple documents to the collection at once.
+
+2. **Read**: 
+   - `find()` is used to query the collection and retrieve documents.
+   - `findOne()` returns a single document that matches the query.
+   - You can specify which fields to include or exclude using the second parameter in `find()`.
+
+3. **Update**: 
+   - `updateOne()` updates a single document that matches the query.
+   - `updateMany()` updates multiple documents that match the query.
+   - `$set` updates the specified fields, and `$inc` increments a field.
+
+4. **Delete**: 
+   - `deleteOne()` deletes a single document.
+   - `deleteMany()` deletes multiple documents that match the query.
+
+---
+
+This covers the basic syntax and examples for performing CRUD operations in MongoDB. You can use these examples as templates for more complex queries and operations!

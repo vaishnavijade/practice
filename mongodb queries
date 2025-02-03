@@ -1,0 +1,736 @@
+1./* 
+Write a MongoDB query to count the number of people above 35 years living in 
+"Bangalore" or "Mumbai".
+
+collection: indianPeople
+
+Sample Document:
+----------------
+{ 
+    "name": "Priya Kumar", 
+    "age": 32, 
+    "gender": "Female", 
+    "phone_number": "9876543210", 
+    "location": "Mumbai", 
+    "salary": 50000
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the documents from 'marks' collection
+        => printjson( db.marks.find())
+    Where,
+    db => database connection object
+    marks => collections name
+    find => method to retrieve all the matched docuemnts
+
+*/
+printjson(db.indianPeople.countDocuments({
+    $and:[{age:{$gt:35}},
+    {$or:[{"location":"Bangalore"},{"location":"Mumbai"}]}
+    ]
+}));
+
+2./* 
+Write a MongoDB query to find people below 40 years and display location and salary, 
+sort them by location in descending order, and limit the result to 5 people.
+
+collection: indianPeople
+
+Sample Document:
+----------------
+{ 
+    "name": "Priya Kumar", 
+    "age": 32, 
+    "gender": "Female", 
+    "phone_number": "9876543210", 
+    "location": "Mumbai", 
+    "salary": 50000
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the documents from 'marks' collection
+        => printjson( db.marks.find())
+    Where,
+    db => database connection object
+    marks => collections name
+    find => method to retrieve all the matched docuemnts
+
+*/
+printjson(db.indianPeople.find(
+    {age:{$lt:40}},{location:1,salary:1,_id:0}
+).sort({"location":-1}).limit(5));
+
+3./* 
+Write a MongoDB query to find all people whose names start with "A"
+
+collection: indianPeople
+
+Sample Document:
+----------------
+{ 
+    "name": "Priya Kumar", 
+    "age": 32, 
+    "gender": "Female", 
+    "phone_number": "9876543210", 
+    "location": "Mumbai", 
+    "salary": 50000
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the documents from 'marks' collection
+        => printjson( db.marks.find())
+    Where,
+    db => database connection object
+    marks => collections name
+    find => method to retrieve all the matched docuemnts
+
+*/
+printjson(db.indianPeople.find(
+    {name:{$regex:/^A/}}
+));
+
+4./*
+Write a query to find all people whose names start with "A"
+
+Sample output
+-------------
+name	    age	gender	phone_number	location	salary	
+Anita Reddy	45	Female	9872101234	    Bangalore	75000.00	
+Aman Chawla	39	Male	9888777665	    Ahmedabad	64000.00                                                                          
+
+
+Table:   
+======
+indianPeople
+    - name VARCHAR(100),
+    - age INT,
+    - gender VARCHAR(10),
+    - phone_number VARCHAR(15),
+    - location VARCHAR(50),
+    - salary DECIMAL(10, 2)
+
+*/
+
+use fs;
+-- write your query below
+select name,age ,gender,phone_number ,location,salary 
+from indianPeople 
+where name like "A%"
+
+5./* 
+Write a MongoDB query to find all people whose phone number ends with "234"
+
+collection: indianPeople
+
+Sample Document:
+----------------
+{ 
+    "name": "Priya Kumar", 
+    "age": 32, 
+    "gender": "Female", 
+    "phone_number": "9876543210", 
+    "location": "Mumbai", 
+    "salary": 50000
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the documents from 'marks' collection
+        => printjson( db.marks.find())
+    Where,
+    db => database connection object
+    marks => collections name
+    find => method to retrieve all the matched docuemnts
+
+*/
+printjson(db.indianPeople.find(
+    {phone_number:{$regex:/234$/}}));
+
+6./*
+Write a query to find people whose salary is more than 10 times their age.
+
+Sample output
+-------------                                                                           
+name	        age	gender	phone_number	location	salary	
+Lata Kulkarni	29	Female	9000055555	    Pune	    62000.00	
+Reshma Rai	    30	Female	9666335522	    Surat	    61000.00
+
+
+Table:   
+======
+indianPeople
+    - name VARCHAR(100),
+    - age INT,
+    - gender VARCHAR(10),
+    - phone_number VARCHAR(15),
+    - location VARCHAR(50),
+    - salary DECIMAL(10, 2)
+
+*/
+
+use fs;
+-- write your query below
+
+select name,age,gender,phone_number ,location,salary
+from indianPeople 
+where salary>2000*age;
+
+7./* 
+Write a MongoDB query to find people whose salary is more than 2000 times their age
+
+collection: indianPeople
+
+Sample Document:
+----------------
+{ 
+    "name": "Priya Kumar", 
+    "age": 32, 
+    "gender": "Female", 
+    "phone_number": "9876543210", 
+    "location": "Mumbai", 
+    "salary": 50000
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the documents from 'marks' collection
+        => printjson( db.marks.find())
+    Where,
+    db => database connection object
+    marks => collections name
+    find => method to retrieve all the matched docuemnts
+
+*/
+printjson(db.indianPeople.find(
+    { $expr: { $gt: ["$salary", { $multiply: ["$age", 2000] }] } }
+));
+
+8./* 
+Write a MongoDB query to find people whose name contains "ita" anywhere
+
+collection: indianPeople
+
+Sample Document:
+----------------
+{
+    "name": "Priya Kumar", 
+    "age": 32, 
+    "gender": "Female", 
+    "phone_number": "9876543210", 
+    "location": "Mumbai", 
+    "salary": 50000
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the documents from 'marks' collection
+        => printjson( db.marks.find())
+    Where,
+    db => database connection object
+    marks => collections name
+    find => method to retrieve all the matched docuemnts
+
+*/
+printjson(db.indianPeople.find(
+    {name:{$regex:/ita/i}}));
+
+
+9./*
+Write a query to find people whose name contains "ita" anywhere in it.
+
+Sample output
+-------------
+name	    age	gender	phone_number	location	salary	
+Anita Reddy	45	Female	9872101234	    Bangalore	75000.00                                                                         
+
+
+Table:   
+======
+indianPeople
+    - name VARCHAR(100),
+    - age INT,
+    - gender VARCHAR(10),
+    - phone_number VARCHAR(15),
+    - location VARCHAR(50),
+    - salary DECIMAL(10, 2)
+
+*/
+
+use fs;
+-- write your query below
+
+
+select * from indianPeople where name like "%ita%";
+
+10./* 
+Write a MongoDB query to display the name and salary of the people whose salary
+exceeds their current salary by at least 5000, after a 10% increase, sort the 
+data in descending order of them salary.
+
+collection: indianPeople
+
+Sample Document:
+----------------
+{ 
+    "name": "Priya Kumar", 
+    "age": 32, 
+    "gender": "Female", 
+    "phone_number": "9876543210", 
+    "location": "Mumbai", 
+    "salary": 50000
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the documents from 'marks' collection
+        => printjson( db.marks.find())
+    Where,
+    db => database connection object
+    marks => collections name
+    find => method to retrieve all the matched docuemnts
+
+*/
+printjson(db.indianPeople.find(
+    { 
+        $expr: { 
+            $gte: [{ $multiply: ["$salary", 1.1] }, { $add: ["$salary", 5000] }] 
+        }
+    },
+    { name: 1, salary: 1, _id: 0 }
+).sort({ salary: -1 }));
+
+
+11./*
+Write a query to display the name and salary of the people whose salary
+exceeds their current salary by at least 5000, after a 10% increase, sort the 
+data in descending order of them salary.
+
+Sample output
+-------------
+name	    salary   	
+Vikas Jain	89000.00	
+Anita Reddy	75000.00                                                                          
+
+
+Table:   
+======
+indianPeople
+    - name VARCHAR(100),
+    - age INT,
+    - gender VARCHAR(10),
+    - phone_number VARCHAR(15),
+    - location VARCHAR(50),
+    - salary DECIMAL(10, 2)
+
+*/
+
+use fs;
+-- write your query below
+select name, salary from indianPeople 
+where salary *1.1 -salary>=5000 
+order by salary desc;
+
+12./*
+Write a query to find all people whose phone number ends with "234"
+
+Sample output
+-------------
+name	    age	gender	phone_number    location    salary	
+Rohan Gupta	28	Male	9876501234	    Delhi	    55000.00	
+Anita Reddy	45	Female	9872101234	    Bangalore   75000.00
+
+
+Table:   
+======
+indianPeople
+    - name VARCHAR(100),
+    - age INT,
+    - gender VARCHAR(10),
+    - phone_number VARCHAR(15),
+    - location VARCHAR(50),
+    - salary DECIMAL(10, 2)
+
+*/
+
+use fs;
+-- write your query below
+
+select * from indianPeople 
+where phone_number like "%234"
+
+
+
+
+
+
+
+
+Greater than and less than comparisons can also be applied to strings.
+
+List the countries that come after "S" in the alphabet.
+
+1
+db.world.find({name: {$gt: "S" }},{_id:0,name:1}).sort({name:1});
+
+{
+	"_id" : ObjectId("6243780d72af02a755db8ed4"),
+	"gdp" : 314889000000,
+	"name" : "Denmark",
+	"area" : 43094,
+	"tld" : ".dk",
+	"id" : 46,
+	"flag" : "//upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg",
+	"capital" : "Copenhagen",
+	"continent" : "Europe",
+	"population" : 5634437
+}
+Find the name and capital cities for countries with a population of over 70 million.
+
+
+db.world.find({population:{$gt:70000000}},{_id:0,name:1,capital:1});
+
+
+Find the countries that have a population that is over 200 million or less than 20,000.
+
+1
+db.world.find(
+2
+    { 
+3
+        $or: [
+4
+            { population: { $gt: 200000000 } },
+5
+            { population: { $lt: 20000 } }
+6
+        ]
+7
+    },
+8
+    { _id: 0, name: 1, population: 1 }
+9
+);
+10
+
+The aggregate method allows a $group - you must specify the _id and you can use aggregating functions such as $sum $min $max $push
+
+The sample code shows the total population of each continent.
+
+Show the number of countries in each continent.
+1
+1
+db.world.aggregate([{
+2
+  $group: {
+3
+    _id: '$continent',
+4
+    res: {
+5
+      $sum: 1
+6
+    }
+7
+  }
+8
+},{$sort:{continent:1}}]);
+Run NoSQLToggle Font SizeRestore DefaultFormat Answer
+Correct
+Your answer:
+{ "_id" : "Caribbean", "res" : 11 }
+{ "_id" : "Oceania", "res" : 14 }
+{ "_id" : "Asia", "res" : 47 }
+{ "_id" : "Europe", "res" : 44 }
+{ "_id" : "South America", "res" : 13 }
+{ "_id" : "North America", "res" : 11 }
+{ "_id" : "Eurasia", "res" : 2 }
+{ "_id" : "Africa", "res" : 53 }
+​
+
+
+
+Give the name and the per capita GDP for those countries with a population of at least 200 million.
+
+How to calculate per capita GDP
+pulation
+1
+db.world.aggregate([
+2
+    {$match: {
+3
+        population: {$gte: 200000000}
+4
+    }},
+5
+    {$project: {
+6
+        _id: 0,
+7
+        name: 1,
+8
+        "per capita GDP": {$divide: ['$gdp', '$population']}
+9
+    }}
+10
+]);
+
+
+
+Give the name and the population density of all countries in South America.
+
+How to calculate population density
+Division by 0 error?
+'
+1
+db.world.aggregate([
+2
+    {$match: {continent: 'South America'}},
+3
+    {$project: {
+4
+        _id: 0,
+5
+        name: 1,
+6
+        density: {$divide: ["$population", "$area"]}
+7
+    }}
+8
+]);
+
+Give the name and the population density of all countries with name after V in the alphabet.
+
+Note that because Vatican City (with area 0) is in Europe you will get a divide by zero error unless you filter first.
+
+Division by 0 error?
+1
+db.world.aggregate([
+2
+    {$match: {name: {$gt: 'V'},area:{$ne:0}}},
+3
+    {$project: {
+4
+        _id: 0,
+5
+        name: 1,
+6
+        "density":{$divide:["$population","$area"]}
+7
+    }}
+8
+]);
+​
+
+Show the name and population in millions for the countries of the continent South America. Divide the population by 1000000 to get population in millions.
+
+1
+db.world.aggregate([{$match:{continent:"South America"}},
+2
+    {$project:{_id:0,name:1,population:{$divide:["$population",1000000]}}}
+3
+]);
+
+
+
+
+
+
+Show the name and population density for France, Germany, and Italy
+
+$area
+1
+db.world.aggregate([
+2
+    {$match:{
+3
+        name: {$in: ['France', 'Germany', 'Italy']},
+4
+        population: {$ne: null},
+5
+        area: {$ne: 0}
+6
+    }},
+7
+    {$project:{
+8
+        _id: 0,
+9
+        name:1,
+10
+        "population density":{$divide:["$population","$area"]} 
+11
+    }}
+12
+]);
+
+
+
+Order the continents by area from most to least.
+
+1
+db.world.aggregate([
+2
+    {$group: {
+3
+        _id: "$continent",
+4
+        area: {$sum: "$area"}
+5
+    }},
+6
+    {$sort: {
+7
+        area: -1
+8
+    }},
+9
+    {$project: {
+10
+        _id: 1,
+11
+        area: 1
+12
+    }}
+13
+]);
+
+
+Show the only two continents with total area greater than 25000000 and then sort from largest to smallest.
+
+1
+db.world.aggregate([
+2
+  {$group: {
+3
+      _id:"$continent",
+4
+      area:{$sum:"$area"}
+5
+  }},{$match:{area:{$gt:25000000}}},
+6
+  {$project: {
+7
+      _id: 1,
+8
+      area: 1
+9
+  }},{$limit:2},{$sort:{area:-1}}
+10
+]);
+
+
+Q.For each continent show the first and last country alphabetically like this:
+
+ { "_id" : "Africa", "from" : "Algeria", "to" : "Zimbabwe" }
+ { "_id" : "Asia", "from" : "Afghanistan", "to" : "Yemen" }
+ { "_id" : "Caribbean", "from" : "Antigua and Barbuda", "to" : "Trinidad and Tobago" }
+ { "_id" : "Eurasia", "from" : "Armenia", "to" : "Russia" }
+ { "_id" : "Europe", "from" : "Albania", "to" : "Vatican City" }
+ { "_id" : "North America", "from" : "Belize", "to" : "United States" }
+ { "_id" : "Oceania", "from" : "Australia", "to" : "Vanuatu" }
+ { "_id" : "South America", "from" : "Argentina", "to" : "Venezuela" }
+
+ db.world.aggregate([
+  {
+    $group: {
+      _id: "$continent", // Group by continent
+      from: { $min: "$name" }, // Find the alphabetically first country
+      to: { $max: "$name" }    // Find the alphabetically last country
+    }
+  },
+  {
+    $sort: { _id: 1 } // Sort continents alphabetically
+  },
+  {
+    $project: {
+      _id: 1, // Include the continent name
+      from: 1, // Include the first country
+      to: 1    // Include the last country
+    }
+  }
+]);
+
+
+
+Q.Countries beginning with...
+10.
+Group countries according to the first letter of the name. As shown. Only give "U" through to "Z".
+
+You will need to use the $substr function and the $push aggregate function.
+
+ { "_id" : "U", "list" : [ "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan" ] }
+ { "_id" : "V", "list" : [ "Vanuatu", "Vatican City", "Venezuela", "Vietnam" ] }
+ { "_id" : "Y", "list" : [ "Yemen" ] }
+ { "_id" : "Z", "list" : [ "Zambia", "Zimbabwe" ] }
+
+db.world.aggregate([
+  {
+    $project: {
+      startsWith: { $substr: ["$name", 0, 1] }, // Extract the first letter of the name
+      name: 1
+    }
+  },
+  {
+    $match: {
+      startsWith: { $in: ["U", "V", "Y", "Z"] } // Filter for specific letters
+    }
+  },
+  {
+    $group: {
+      _id: "$startsWith", // Group by the first letter
+      list: { $push: "$name" } // Collect all country names starting with that letter
+    }
+  },
+  {
+    $sort: { _id: 1 } // Sort alphabetically by the first letter
+  }
+]);
+
+
+Q.Combine North America and South America to America, and then list the continents by area. Biggest first.
+db.world.aggregate([
+  {
+    $group: {
+      _id: {
+        $cond: [
+          { $or: [ { $eq: ["$continent", "North America"] }, { $eq: ["$continent", "South America"] } ] },
+          "America", // Combine North America and South America into "America"
+          "$continent" // Keep the other continents as they are
+        ]
+      },
+      area: { $sum: "$area" } // Sum the areas for each group
+    }
+  },
+  {
+    $sort: { area: -1 } // Sort by area in descending order
+  },
+  {
+    $project: {
+      _id: 1, // Include the continent name
+      area: 1 // Include the total area
+    }
+  }
+]);
+
+
+
+Q.Show the number of countries in each order.
+
+For example UK has a population of 64,105,700 so it belongs in the 10,000,000 bucket.
+
+You will need the functions $floor, $log10 and $pow
+
+db.world.aggregate([
+  {
+    $project: {
+      name: 1,
+      population: 1,
+      order: { $floor: { $log10: "$population" } } // Calculate the order (log10 of population)
+    }
+  },
+  {
+    $group: {
+      _id: { $pow: [10, "$order"] }, // Recreate the bucket label as 10^order
+      count: { $sum: 1 } // Count the number of countries in each bucket
+    }
+  },
+  {
+    $sort: { _id: 1 } // Sort by bucket order
+  }
+])
